@@ -42,7 +42,11 @@ int main(int argc, char **argv) {
 		for (int i = 0; i < count; ++i) {
 			ws.mutateMatch(i, [&distribution, &generator](char c) {
 				(void)c;
-				return distribution(generator);
+				// 50% chance to replace with random letter
+				if (std::uniform_real_distribution<>(0, 1)(generator) < 0.5) {
+					return distribution(generator);
+				}
+				// 50% chance to increment letter (A->B, Z->A)
 				return (c == 'Z') ? 'A' : c + 1;
 			});
 		}
