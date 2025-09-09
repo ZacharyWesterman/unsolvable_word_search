@@ -16,19 +16,39 @@ int main(int argc, char **argv) {
 
 	std::cerr << "Loading dictionary... ";
 	z::util::dictionary dict;
-	if (dict.read("/usr/share/dict/words")) {
+	if (dict.read("data/english.txt")) {
 		std::cerr << "ERROR: Failed to read dictionary file!" << std::endl;
 		return 1;
 	} else {
-		dict = dict.filter([](const zstring &word) { return word.length() >= 3; });
-		std::cout << zstring::numberFormat(dict.length()) << " words.\n";
+		std::cerr << zstring::numberFormat(dict.length()) << " words.\n";
 	}
 
 	// Create an initial random grid
 	wordSearch ws;
 	ws.randomize(rows, cols);
 
-	std::cout << "Permuting grid to exclude dictionary words..." << std::endl;
+	std::cerr << "Permuting the grid until it contains only words of length 2..." << std::endl;
+
+	std::random_device device;
+	std::mt19937 generator(device());
+	std::uniform_int_distribution<int> distribution(65, 90); // A-Z
+
+	// Narrow down the grid until only 2-letter words remain.
+	int count = 0;
+	while ((count = ws.scan(dict, 3))) {
+		std::cerr << "Found " << count << " words, permuting...\n";
+
+		// Randomly change each letter in each found word
+		for (int i = 0; i < count; ++i) {
+			ws.mutateMatch(i, [&distribution, &generator](char c) {
+				(void)c;
+				return distribution(generator);
+				return (c == 'Z') ? 'A' : c + 1;
+			});
+		}
+
+		ws.reset();
+	}
 
 	// Print the grid
 	ws.print(std::cout);

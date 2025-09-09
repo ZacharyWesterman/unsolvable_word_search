@@ -31,15 +31,16 @@ private:
 	int selectedMatch;
 	int oldColor;
 
-	void setHighlight(int pos, int dir, int len, int color);
-
 public:
+	void setHighlight(int pos, int dir, int len, int color);
 	wordSearch();
 	~wordSearch();
 
 	bool load(std::istream &input);
 	// bool load(const zstring &input);
 	void randomize(int rows, int cols);
+
+	void mutateMatch(int index, std::function<char(char)> lambda);
 
 	bool loaded() const;
 

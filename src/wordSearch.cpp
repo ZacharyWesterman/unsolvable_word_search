@@ -191,6 +191,18 @@ wordMatch wordSearch::getMatchData(int index) const {
 	return thisMatch;
 }
 
+void wordSearch::mutateMatch(int index, std::function<char(char)> lambda) {
+	if ((index < 0) || (index >= matches.length())) {
+		return;
+	}
+
+	auto match = matches[index];
+
+	for (int i = 0; i < match.len && i < dataWidth * dataHeight; ++i) {
+		data[match.pos + i * match.dir] = lambda(data[match.pos + i * match.dir]);
+	}
+}
+
 void wordSearch::print(std::ostream &output) const {
 	for (int y = 0; y < dataHeight; ++y) {
 		int active = 0;
