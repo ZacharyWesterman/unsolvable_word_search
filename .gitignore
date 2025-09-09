@@ -9,3 +9,4 @@ unsolvable_word_search
 *.gcda
 *.gcov
 *.d
+*.png
