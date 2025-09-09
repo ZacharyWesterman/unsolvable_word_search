@@ -1,0 +1,11 @@
+*.o
+unsolvable_word_search
+*.so
+*.exe
+*.dll
+*.a
+*.log
+*.gcno
+*.gcda
+*.gcov
+*.d
