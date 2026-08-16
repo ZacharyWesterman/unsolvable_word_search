@@ -3,6 +3,7 @@
 This project allows generating word searches that are guaranteed to contain zero English words!
 
 To get started, run `make`. Note that this project requires my `libzed` library to be installed!
+By default, `make` will link dynamically, but if you'd like to link statically, run `make LIBZED=/path/to/libzed.a`.
 
 After building succeeds, you can generate word search images by running the following:
 ```

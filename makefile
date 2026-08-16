@@ -5,7 +5,11 @@ CXX = g++
 CXXFLAGS = -std=$(STD) \
 	-W -Wall -Wextra -Wno-psabi -Werror \
 	-pedantic -fexceptions
-LDFLAGS = -lm -m64 -lzed
+LDFLAGS = -lm -m64
+
+ifeq ($(LIBZED),)
+LDFLAGS += -lzed
+endif
 
 SRCS := $(wildcard src/*.cpp)
 OBJS := $(patsubst %.cpp,%.o,$(SRCS))
@@ -14,7 +18,7 @@ OBJS := $(patsubst %.cpp,%.o,$(SRCS))
 
 all: $(BIN)
 
-$(BIN): $(OBJS)
+$(BIN): $(OBJS) $(LIBZED)
 	$(CXX) -o $@ $^ $(LDFLAGS)
 
 main.o: main.cpp
