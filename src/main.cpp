@@ -3,11 +3,12 @@
 #include <random>
 #include <z/core/array.hpp>
 #include <z/core/string.hpp>
+#include <z/file/basename.hpp>
 #include <z/util/dictionary.hpp>
 
 int main(int argc, char **argv) {
 	if (argc < 3) {
-		std::cerr << "Usage: " << argv[0] << " <rows> <cols>" << std::endl;
+		std::cerr << "Usage: `" << z::file::basename(argv[0]) << " <rows> <cols>`" << std::endl;
 		return 1;
 	}
 
