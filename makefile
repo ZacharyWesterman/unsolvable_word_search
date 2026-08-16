@@ -9,6 +9,8 @@ LDFLAGS = -lm -m64
 
 ifeq ($(LIBZED),)
 LDFLAGS += -lzed
+else
+LDFLAGS += -Wl,--gc-sections
 endif
 
 SRCS := $(wildcard src/*.cpp)
